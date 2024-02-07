@@ -40,11 +40,42 @@ function App() {
 
   const deleteNote = (entry) => {
     // Code for DELETE here
-    
+    try {
+      fetch(`http://localhost:4000/deleteNote/${entry._id}`, {
+        method: "DELETE"
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          console.log("Served failed:", response.status)
+        } else {
+          await response.json().then((data) => {
+            deleteNoteState(entry._id)
+          })
+        }
+      })
+    } catch (error) {
+      console.log("Fetch function failed:", error)
+    }
   }
 
   const deleteAllNotes = () => {
     // Code for DELETE all notes here
+    try {
+      fetch(`http://localhost:4000/deleteAllNotes`, {
+        method: "DELETE"
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          console.log("Served failed:", response.status)
+        } else {
+          await response.json().then((data) => {
+            deleteAllNotesState()
+          })
+        }
+      })
+    } catch (error) {
+      console.log("Fetch function failed:", error)
+    }
   }
 
   
@@ -73,9 +104,9 @@ function App() {
     setNotes((prevNotes) => [...prevNotes, {_id, title, content}])
   }
 
-  const deleteNoteState = () => {
+  const deleteNoteState = (id) => {
     // Code for modifying state after DELETE here
-    setNotes((prevNotes) => prevNotes.filter((entry) => entry._id !== _id))
+    setNotes((prevNotes) => prevNotes.filter((entry) => entry._id !== id))
   }
 
   const deleteAllNotesState = () => {

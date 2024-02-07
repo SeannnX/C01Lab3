@@ -3,7 +3,7 @@ import './App.css';
 
 const baseNote = {title: "", content: ""}
 
-function Dialog({open, initialNote, closeDialog, postNote: postNoteState, patchNote: patchNoteState}) {
+function Dialog({open, initialNote, closeDialog, postNote: postNoteState}) {
 
     // -- Dialog props --
     const [note, setNote] = useState(baseNote)
@@ -56,34 +56,34 @@ function Dialog({open, initialNote, closeDialog, postNote: postNoteState, patchN
 
     const patchNote = async (entry) => {
         // Code for PATCH here
-        if (!note.title || !note.content) {
-            return 
-        }
+        // if (!note.title || !note.content) {
+        //     return 
+        // }
 
-        setStatus("Loading...")
+        // setStatus("Loading...")
 
-        try {
-            await fetch(`http://localhost:4000/patchNote/${entry._id}`,
-                {method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({title: note.title, content: note.content})} )
-            .then(async (response) => {
-                if (!response.ok) {
-                    setStatus(`Error trying to patch note`)
-                    console.log("Served failed:", response.status)
-                } else {
-                    await response.json().then((data) => {
-                        patchNoteState(data.insertedId, note.title, note.content)
-                        close()
-                    }) 
-                }
-            })
-        } catch (error) {
-            setStatus("Error trying to patch note")
-            console.log("Fetch function failed:", error)
-        }
+        // try {
+        //     await fetch(`http://localhost:4000/patchNote/${entry._id}`,
+        //         {method: "PATCH",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         body: JSON.stringify({title: note.title, content: note.content})} )
+        //     .then(async (response) => {
+        //         if (!response.ok) {
+        //             setStatus(`Error trying to patch note`)
+        //             console.log("Served failed:", response.status)
+        //         } else {
+        //             await response.json().then((data) => {
+        //                 patchNoteState(data.insertedId, note.title, note.content)
+        //                 close()
+        //             }) 
+        //         }
+        //     })
+        // } catch (error) {
+        //     setStatus("Error trying to patch note")
+        //     console.log("Fetch function failed:", error)
+        // }
     }
 
     return (

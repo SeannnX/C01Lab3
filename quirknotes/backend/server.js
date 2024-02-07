@@ -145,3 +145,15 @@ app.patch("/patchNote/:noteId", express.json(), async (req, res) => {
     res.status(500).json({error: error.message})
   }
 })
+
+// Delete all notes
+app.delete("/deleteAllNotes", express.json(), async (req, res) => {
+  try {
+    // Delete all notes
+    const collection = db.collection(COLLECTIONS.notes);
+    const data = await collection.deleteMany();
+    res.json({ response: `Deleted ${data.deletedCount} notes.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+})
